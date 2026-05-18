@@ -23,21 +23,26 @@
         }
 
         /* 
-           GASバナーを隠すためのコンテナ
-           Index.html側のpt-[70px]と組み合わせて、バナーを消しつつロゴを綺麗に見せます
+           GASバナーを隠しつつ、ステータスバーとの被りを防ぐコンテナ
+           （GAS側のpt-[70px]等のパディング追加は不要になります）
         */
         .iframe-container {
             position: absolute;
-            top: -50px;
+            /* 時計（ステータスバー）と被らないよう、最低30pxまたはセーフエリア分下げる */
+            top: max(30px, env(safe-area-inset-top)); 
             left: 0;
             width: 100%;
-            height: calc(100% + 50px);
+            height: calc(100% - max(30px, env(safe-area-inset-top)));
+            overflow: hidden;
             -webkit-overflow-scrolling: touch;
         }
 
         iframe {
+            position: absolute;
+            top: -44px; /* GASバナー分を上にずらして隠す */
+            left: 0;
             width: 100%;
-            height: 100%;
+            height: calc(100% + 44px);
             border: none;
             display: block;
         }
